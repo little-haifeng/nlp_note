@@ -12,6 +12,6 @@
 - 众多主题
 
 [GitHub](https://github.com/docsifyjs/docsify/)
-[Get Started](READMe)
+[Get Started](README)
 
 <!-- ![color](#ff70ac82) -->
