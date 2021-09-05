@@ -99,7 +99,7 @@
 <script>
   const gitalk = new Gitalk({
     clientID: '5fb828a755e3375d3e16',
-    clientSecret: 'a00e9e25fa0c3be485ef156c838cbcd588d6890a',
+    clientSecret: '8b6ff18c0e0a306cdbff25822b358b44f92e3cb7',
     repo: 'nlp_note',
     owner: 'little-haifeng',
     admin: ['little-haifeng'],
@@ -108,12 +108,33 @@
     // facebook-like distraction free mode
     distractionFreeMode: false
     })
-    // 监听URL中hash的变化，如果发现换了一个MD文件，那么刷新页面，解决整个网站使用一个gitalk评论issues的问题。
-    window.onhashchange = function(event){
+  window.onhashchange = function(event){
       if(event.newURL.split('?')[0] !== event.oldURL .split('?')[0]) {
         location.reload()
       }
     }
 </script>
+<!-- 评论插件的应用 -->
+  <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+  <script src="//unpkg.com/docsify/lib/plugins/gitalk.min.js"></script>
+  <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '02724a2355f93ed58315',
+      clientSecret: '014380e0fb7bfa7beea3385328d29e7dc9c46f99',
+      repo: 'LeeML-Notes',
+      owner: 'datawhalechina',
+      admin: ['datawhalechina','Spareribs'],
+      title: location.hash.match(/#(.*?)([?]|$)/)[1],
+      id: location.hash.match(/#(.*?)([?]|$)/)[1],
+      distractionFreeMode: false // facebook-like distraction free mode
+    })
+  // 监听URL中hash的变化，如果发现换了一个MD文件，那么刷新页面，解决整个网站使用一个gitalk评论issues的问题。
+    window.onhashchange = function(event){
+      if(event.newURL.split('?')[0] !== event.oldURL .split('?')[0]) {
+        location.reload()
+      }
+    }
+  </script>
 </body>
 </html>
