@@ -26,7 +26,9 @@
 <br>
 
 # 主要贡献者（按首字母排名）
+- [@suqli](https://github.com/suqli)
 - [@little-haifeng](https://github.com/little-haifeng)
+- [@22132246Sy](https://github.com/22132246Sy)
 
 ## NLP_Note 项目交流群
 
