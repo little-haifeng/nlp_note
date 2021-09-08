@@ -14,6 +14,12 @@
 
 <br>
 
+# 课件资料下载地址
+
+课件资料地址：https://gitee.com/xuhaifeng-maker/nlp_note
+
+<br>
+
 # 课程在线观看地址
 - bilibili：[贪心 NLP 自然语言处理](https://www.bilibili.com/video/BV1yK4y1E7n4?p=22)
 
@@ -21,3 +27,8 @@
 
 # 主要贡献者（按首字母排名）
 - [@little-haifeng](https://github.com/little-haifeng)
+
+## NLP_Note 项目交流群
+
+<div align=center><img src="二维码.png" width = "250" height = "270" alt="NLP_Note项目交流群"></div>
+
