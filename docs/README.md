@@ -30,7 +30,7 @@
 - [@little-haifeng](https://github.com/little-haifeng)
 - [@22132246Sy](https://github.com/22132246Sy)
 
-## NLP_Note 项目交流群
+## NLP_Note 交流反馈群
 
 <div align=center><img src="二维码.png" width = "250" height = "270" alt="NLP_Note项目交流群"></div>
 

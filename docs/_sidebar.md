@@ -1,7 +1,8 @@
 * **目录**
  * [P1 机器学习介绍](chapter1/chapter1.md)
- * [p2分词](chapter2/chapter2.md)
- * [p3纠错](纠错/纠错.md)
+ * [p2算法复杂度](算法复杂度/算法复杂度.md)
+ * [p3分词](chapter2/chapter2.md)
+ * [p4纠错](纠错/纠错.md)
  * [P3 回归](chapter3/chapter3.md)
  * [P4 回归-演示](chapter4/chapter4.md)
  * [P5 误差从哪来？](chapter5/chapter5.md)

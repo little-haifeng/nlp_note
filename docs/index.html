@@ -8,6 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
   <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css"> -->
+  <style type="text/css">
+    .docsify-copy-code-button{
+      background: #fd9b01;
+    }
+  </style>
 </head>
 <body>
   <div id="app"></div>
@@ -83,7 +88,8 @@
   <!-- <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script> -->
   <!-- docsify-copy-code -->
   <!-- <script src="https://unpkg.com/docsify-copy-code@2"></script> -->
-  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
+  <script src="://cdn.jsdelivr.net/gh/little-haifeng/CDN@master/js/docsify-copy-code.js"></script>
+  <!-- <script src="https://unpkg.com/docsify-copy-code"></script> -->
   <!--语法高亮添加-->
 <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
@@ -92,16 +98,16 @@
 <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-sql.min.js"></script>
 <!-- alert 样式 -->
-<link rel="stylesheet" href="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.css" type='text/css' media='all' />
+<!-- <link rel="stylesheet" href="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.css" type='text/css' media='all' /> -->
 <!-- 复制提醒 -->
-<script src="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.js"></script>
-<script>
+<!-- <script src="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.js"></script> -->
+<!-- <script>
   window.onload = function(){
     document.body.oncopy = function() {
       swal("复制成功🎉", "若要转载或引用请务必保留原文链接，并声明来源，如果你觉得本仓库不错，那就来github给个start吧😁","success");
     };
   }
-</script>
+</script> -->
 <!-- Docsify-alerts -->
 <script src="https://unpkg.com/docsify-plugin-flexible-alerts"></script>
 <!-- Gitalk -->
