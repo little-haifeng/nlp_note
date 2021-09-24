@@ -62,7 +62,7 @@ NLP=NLU+NLG
 
 ## 自然语言处理的难点
 
-![](res/chapter1-6.png)
+<div align="center"><img src="./chapter1/res/chapter1-6.png"></div>
 
 - 语言是没有规律的，或者说规律是错综复杂的。
 - 语言是可以自由组合的，可以组合复杂的语言表达。
@@ -74,7 +74,7 @@ NLP=NLU+NLG
 
 # NLP 的4个典型应用
 
-![](res/chapter1-1.png)
+<div align="center"><img src="./chapter1/res/chapter1-1.png"></div>
 
 **情感分析**
 
@@ -102,7 +102,7 @@ NLP 可以使用传统的机器学习方法来处理，也可以使用深度学�
 
 **方式 1：传统机器学习的 NLP 流程**
 
-![](res/chapter1-2.png)
+<div align="center"><img src="./chapter1/res/chapter1-2.png"></div>
 
 - 语料预处理
 - 中文语料预处理 4 个步骤（下文详解）
@@ -114,7 +114,7 @@ NLP 可以使用传统的机器学习方法来处理，也可以使用深度学�
 
 **方式 2：深度学习的 NLP 流程**
 
-![](res/chapter1-3.png)
+<div align="center"><img src="./chapter1/res/chapter1-3.png"></div>
 
 - 语料预处理
 - 中文语料预处理 4 个步骤（下文详解）
@@ -124,7 +124,7 @@ NLP 可以使用传统的机器学习方法来处理，也可以使用深度学�
 
 # 英文 NLP 语料预处理的 6 个步骤
 
-![](res/chapter1-4.png)
+<div align="center"><img src="./chapter1/res/chapter1-4.png"></div>
 
 - 分词 – Tokenization
 - 词干提取 – Stemming
@@ -135,7 +135,7 @@ NLP 可以使用传统的机器学习方法来处理，也可以使用深度学�
 
 # 中文 NLP 语料预处理的 4 个步骤
 
-![](res/chapter1-5.png)
+<div align="center"><img src="./chapter1/res/chapter1-5.png"></div>
 
 - 中文分词 – Chinese Word Segmentation
 - 词性标注 – Parts of Speech

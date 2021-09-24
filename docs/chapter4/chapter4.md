@@ -1,153 +1,71 @@
-##  回归演示
-代码到放在Regression-Demo.md中，自取哦！
+## 编辑距离
 
+![](res/纠错-1.png)
 
-现在假设有10个x_data和y_data，x和y之间的关系是y_data=b+w*x_data。b，w都是参数，是需要学习出来的。现在我们来练习用梯度下降找到b和w。
+错别字分为两种情况，1. 本身就是错别字。2. 不是错别字而是不合适，语法错误啊，英语中的时态问题。
 
-```
-import numpy as np
-import matplotlib.pyplot as plt
-from pylab import mpl
+![](res/纠错-2.png)
 
-# matplotlib没有中文字体，动态解决
-plt.rcParams['font.sans-serif'] = ['Simhei']  # 显示中文
-mpl.rcParams['axes.unicode_minus'] = False  # 解决保存图像是负号'-'显示为方块的问题
-```
+首先来阐述一下动态规划中的编辑距离问题吧。  给你两个单词 word1 和 word2，请你计算出将 word1 转换成 word2 所使用的最少操作数 。你可以对一个单词进行如下三种操作：1. 插入一个字符  2.  删除一个字符 3. 替换一个字符 
 
-```
-x_data = [338., 333., 328., 207., 226., 25., 179., 60., 208., 606.]
-y_data = [640., 633., 619., 393., 428., 27., 193., 66., 226., 1591.]
-x_d = np.asarray(x_data)
-y_d = np.asarray(y_data)
+```markdown
+输入：word1 = "intention", word2 = "execution"
+输出：5
+解释：
+intention -> inention (删除 't')
+inention -> enention (将 'i' 替换为 'e')
+enention -> exention (将 'n' 替换为 'x')
+exention -> exection (将 'n' 替换为 'c')
+exection -> execution (插入 'u')
 ```
 
+最后呢，计算出 **there** 和 **their**  编辑距离一样长，但是最后到底返回啥单词呢？此处就要多方面考虑。编辑距离、词频和上下文。具体使用根据你所建立的模型参数有关。
 
 ```
-x = np.arange(-200, -100, 1)
-y = np.arange(-5, 5, 0.1)
-Z = np.zeros((len(x), len(y)))
-X, Y = np.meshgrid(x, y)
-```
-  
-```
-# loss
-for i in range(len(x)):
-    for j in range(len(y)):
-        b = x[i]
-        w = y[j]
-        Z[j][i] = 0  # meshgrid吐出结果：y为行，x为列
-        for n in range(len(x_data)):
-            Z[j][i] += (y_data[n] - b - w * x_data[n]) ** 2
-        Z[j][i] /= len(x_data)
+
 ```
 
 
 
-先给b和w一个初始值，计算出b和w的偏微分
-```python
-# linear regression
-#b = -120
-#w = -4
-b=-2
-w=0.01
-lr = 0.000005
-iteration = 1400000
+## 作业
 
-b_history = [b]
-w_history = [w]
-loss_history = []
-import time
-start = time.time()
-for i in range(iteration):
-    m = float(len(x_d))
-    y_hat = w * x_d  +b
-    loss = np.dot(y_d - y_hat, y_d - y_hat) / m
-    grad_b = -2.0 * np.sum(y_d - y_hat) / m
-    grad_w = -2.0 * np.dot(y_d - y_hat, x_d) / m
-    # update param
-    b -= lr * grad_b
-    w -= lr * grad_w
+![](res/纠错-3.png)
 
-    b_history.append(b)
-    w_history.append(w)
-    loss_history.append(loss)
-    if i % 10000 == 0:
-        print("Step %i, w: %0.4f, b: %.4f, Loss: %.4f" % (i, w, b, loss))
-end = time.time()
-print("大约需要时间：",end-start)
-```
-```python
-# plot the figure
-plt.contourf(x, y, Z, 50, alpha=0.5, cmap=plt.get_cmap('jet'))  # 填充等高线
-plt.plot([-188.4], [2.67], 'x', ms=12, mew=3, color="orange")
-plt.plot(b_history, w_history, 'o-', ms=3, lw=1.5, color='black')
-plt.xlim(-200, -100)
-plt.ylim(-5, 5)
-plt.xlabel(r'$b$')
-plt.ylabel(r'$w$')
-plt.title("线性回归")
-plt.show()
+## 过滤候选
 
-```
-输出结果如图
+我们通过动态规划的编辑距离，计算出需要返回的单词。问题也貌似迎刃而解了。但是文哲老师总是喜欢抛砖引玉。细细思考我们的候选单词是怎么来的，如果候选单词是整个字典的话，复杂度极高，直接pass这种想法。
 
-![chapter1-0.png](res/chapter4-1.png)
+此时就有一个绝妙的 **idea** 。我们基于用户的输出生成所有可能的单词。然后进行过滤就生成了我们的候选单词。
 
-横坐标是b，纵坐标是w，标记×位最优解，显然，在图中我们并没有运行得到最优解，最优解十分的遥远。那么我们就调大learning rate，lr = 0.000001（调大10倍），得到结果如下图。
+![](res/纠错-4.png)
 
-![chapter1-0.png](res/chapter4-2.png)
+那么接下来就是过滤操作。思考一个问题，那就是怎么进行过滤呢？首先重申一下贝叶斯定理：
+$$
+p(x|y) = \cfrac{p(x,y)}{p(y)} =\cfrac{p(y|x)\cdot p(x)}{p(y)}
+$$
 
-我们再调大learning rate，lr = 0.00001（调大10倍），得到结果如下图。
+其中 $c$ 是正确单词，$s$ 是用户输入。我们对候选单词进行过滤也就是使$p(s|c)*p(c)$概率最大化。
 
-![chapter1-0.png](res/chapter4-3.png)
+![](res/纠错-5.png)
 
-结果发现learning rate太大了，结果很不好。
+> [!TIP|style:flat|label:little-tip]
+> 上图中的$p(s)$是经过词频统计后的常数项。对求极值 $\hat{c}$ 无影响
+>
+> 
 
-所以我们给b和w特制化两种learning rate
-```python
-# linear regression
-b = -120
-w = -4
-lr = 1
-iteration = 100000
+> [!Note|style:flat]
+> 机器是怎么判断用户输入的是apple的错误单词而不是banana的错误单词呢？
 
-b_history = [b]
-w_history = [w]
+其实是这样的。 **banana** 事件是不可能发生的。假设用户输入 **appl**。我们通过编辑距离生成了许多单词。但是许多单词都是错误的，联想python里面字典。过滤最后剩下 **app、apple、apply** 等等。
 
-lr_b=0
-lr_w=0
-import time
-start = time.time()
-for i in range(iteration):
-    b_grad=0.0
-    w_grad=0.0
-    for n in range(len(x_data)):
-        b_grad=b_grad-2.0*(y_data[n]-n-w*x_data[n])*1.0
-        w_grad= w_grad-2.0*(y_data[n]-n-w*x_data[n])*x_data[n]
-    
-    lr_b=lr_b+b_grad**2
-    lr_w=lr_w+w_grad**2
-    # update param
-    b -= lr/np.sqrt(lr_b) * b_grad
-    w -= lr /np.sqrt(lr_w) * w_grad
+| 用户1 | 用户2 | 用户3 | 用户4 | 用户5 | 用户6 | 用户7 | 用户8 |  用户9  |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :-----: |
+| appl  | apple | appl  |  app  | appla | apply | apple | apple | applyed |
 
-    b_history.append(b)
-    w_history.append(w)
-```
-```python
-# plot the figure
-plt.contourf(x, y, Z, 50, alpha=0.5, cmap=plt.get_cmap('jet'))  # 填充等高线
-plt.plot([-188.4], [2.67], 'x', ms=12, mew=3, color="orange")
-plt.plot(b_history, w_history, 'o-', ms=3, lw=1.5, color='black')
-plt.xlim(-200, -100)
-plt.ylim(-5, 5)
-plt.xlabel(r'$b$')
-plt.ylabel(r'$w$')
-plt.title("线性回归")
-plt.show()
+注意：假定这里词典只有有 **app、apple、apply** 。在编辑距离为2的前提下，前8个单词都能生成以上**app、apple、apply** 这三个单词。**用户9**输入只能生成**apply**。用户9单词是**apply**独属的
 
-```
+> [!Note|style:flat]
+> 有关$p(s|c)$的计算问题以及top-k呢？
 
-![chapter1-0.png](res/chapter4-4.png)
+假设上表就是数据仓库所有用户数据。$p(appl|apple) = \cfrac{2}{8}$，$p(appl|apply) = \cfrac{2}{9}$，$p(appl|app) = \cfrac{2}{8}$。$p(appl|apple) = p(appl|app)$怎么办呢？其实她两相等也并不影响  $\hat{c}$ 的计算。$\hat{c}$ 还受 $p(c)$ 影响。至于$p(x)$计算 采用unigram 模型计算概率。其实这里采用文本词频是并不理想的。比如 **Poison apple** 上下文具有关联性。而不是相互独立。具体采用哪种方法更建模及现实场景有关。
 
-有了新的特制化两种learning rate就可以在10w次迭代之内到达最优点了。
