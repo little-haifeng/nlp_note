@@ -31,5 +31,5 @@
 
 ## NLP_Note 交流群
 
-<div align=center><img src="二维码.png" width = "250" height = "270" alt="NLP_Note项目交流群"></div>
+<div align=center><img src="https://cdn.jsdelivr.net/gh/little-haifeng/CDN@master/img/page/%E4%BA%8C%E7%BB%B4%E7%A0%81.png" width = "250" height = "270" alt="NLP_Note项目交流群"></div>
 
