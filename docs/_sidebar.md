@@ -4,7 +4,7 @@
  * [p3 分词](chapter3/chapter3.md)
  * [p4 纠错](chapter4/chapter4.md)
  * [P5 词中的数学](chapter5/chapter5.md)
- * [P4 回归-演示](chapter4/chapter4.md)
+ * [P6 统计语言模型](chapter6/chapter6.md)
  * [P5 误差从哪来？](chapter5/chapter5.md)
  * [P6 梯度下降](chapter6/chapter6.md)
  * [ P7 梯度下降（用AOE演示）](chapter7/chapter7.md)

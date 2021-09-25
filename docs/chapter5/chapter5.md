@@ -113,13 +113,13 @@ print(document_vector)
 
 **TF-IDF的主要思想是**：如果某个词或短语在一篇文章中出现的频率TF高，并且在其他文章中很少出现，则认为此词或者短语具有很好的类别区分能力，适合用来分类。TFIDF 实际上是： **TF \* IDF** ，**TF** 词频 **(Term Frequency)** ，**IDF** 反文档频率 **(Inverse Document Frequency)** 。**TF**表示词条在文档d中出现的频率（另一说：**TF词频(Term Frequency)指**的是某一个给定的词语在该文件中出现的次数）。**IDF**的主要思想是：如果包含词条t的文档越少，也就是n越小，**IDF**越大（见后续公式），则说明词条t具有很好的类别区分能力。如果某一类文档C中包含词条t的文档数为m，而其它类包含t的文档总数为k，显然所有包含t的文档数 **n=m+k**，当m大的时候，n也大，按照IDF公式得到的I**DF**的值会小，就说明该词条t类别区分能力不强。（另一说：**IDF 反文档频率(Inverse Document Frequency)是指果包含词条的文档越少，IDF 越大，**则说明词条具有很好的类别区分能力。）但是实际上，有时候，如果一个词条在一个类的文档中频繁出现，则说明该词条能够很好代表这个类的文本的特征，这样的词条应该给它们赋予较高的权重，并选来作为该类文本的特征词以区别与其它类文档。这就是 **IDF** 的不足之处.
 $$
-IDF=log(\cfrac{语料库所有文档疏数目}{出现这个词的文章数目})
+IDF=log(\cfrac{语料库所有文档的数目}{出现这个词的文章数目})
 $$
 
 
 如果某一个生僻词没有在训练集中出现，就会导致分母为0，所以我们需要做一些平滑：
 $$
-IDF=log(\cfrac{语料库所有文档疏数目+1}{出现这个词的文章数目+1})
+IDF=log(\cfrac{语料库所有文档的数目+1}{出现这个词的文章数目+1})
 $$
 
 ```python
@@ -213,8 +213,6 @@ $$
 cos\theta  = \frac{\sum_{i=1}^{n}x_{i}*y_{i}}{\sqrt{\sum_{i=1}^{n}x_{i}^{2} \sum_{i=1}^{n}y_{i}^{2}}}
 $$
 
-## 分布式词向量
-
 ## 倒排表
 
 ![](res/chapter5-3.png)
@@ -248,6 +246,76 @@ $$
  
 
 搜索的过程：当用户输入任意的词条时，首先对用户输入的数据进行分词，得到用户要搜索的所有词条，然后拿着这些词条去倒排索引列表中进行匹配。找到这些词条就能找到包含这些词条的所有文档的编号。然后根据这些编号去文档列表中找到文档
+
+## 相关度排序完整代码
+
+```python
+import copy
+from collections import OrderedDict,Counter
+from nltk.tokenize import TreebankWordTokenizer
+from nlpia.data.loaders import harry_docs as docs
+# docs = ['The faster Harry got to the store, the faster and faster Harry would get home.',
+# 'Harry is hairy and faster than Jill.', 'Jill is not as hairy as Harry.']
+
+# 创建一个文档字典的长度零向量
+tokenizer = TreebankWordTokenizer()
+doc_tokens = []
+for doc in docs:
+    doc_tokens += [sorted(tokenizer.tokenize(doc.lower()))]
+all_doc_tokens = sum(doc_tokens,[])
+lexion = sorted(set(all_doc_tokens))
+zero_vector = OrderedDict((token,0) for token in lexion)
+
+# 计算每篇文档TF-IDF值
+document_tfidf_vector = []
+for doc in docs:
+    vec = copy.copy(zero_vector)
+    tokens = tokenizer.tokenize(doc.lower())
+    token_counts = Counter(tokens)
+
+    for key,value in token_counts.items():
+        # print(key,value)
+        docs_containing_key = 0
+        for doc in docs:
+            if key in doc:
+                docs_containing_key += 1
+
+            tf = value / len(lexion)
+            if docs_containing_key:
+                idf = len(docs) / docs_containing_key
+            else:
+                idf = 0
+            vec[key] = tf*idf
+        document_tfidf_vector.append(vec)
+print(document_tfidf_vector)
+
+# 计算查询语句的TF_IDF值
+query_vec = copy.copy(zero_vector)
+query = "How long does it take to get to the store"
+tokens = tokenizer.tokenize(query.lower())
+token_count = Counter(tokens)
+# print(token_count)
+for key,value in token_count.items():
+    # print(key,value)
+    docs_containing_key = 0
+    for doc in docs:
+        if key in doc.lower():
+            docs_containing_key += 1
+        else:
+            continue
+        tf = value / len(tokens)
+        idf = len(docs) / docs_containing_key
+        query_vec[key] = tf*idf
+        
+# 计算相似度
+import numpy as np
+a = np.array(list(query_vec.values()))
+b = np.array(list(document_tfidf_vector[0].values()))
+cos_theta = a@b/(np.linalg.norm(a)*np.linalg.norm(b))
+print(cos_theta)
+```
+
+
 
 ---
 
