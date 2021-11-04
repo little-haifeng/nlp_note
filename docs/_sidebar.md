@@ -7,7 +7,7 @@
  * [P6 统计语言模型](chapter6/chapter6.md)
  * [ P7 专家系统](chapter7/chapter7.md)
  * [P8 Numpy基础](chapter8/chapter8.md)
- * [P9 作业1-PM2.5预测](chapter9/chapter9.md)
+ * [P9 Pandas基础](chapter9/chapter9.md)
  * [P10 概率分类模型](chapter10/chapter10.md)
  * [P11 logistic回归](chapter11/chapter11.md)
  * [P12 作业2-赢家还是输家](chapter12/chapter12.md)
